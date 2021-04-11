@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/**
+
+# coverage
+.coverage
+htmlcov/**
+
+# Environment settings file
+.env
+
+# IDE
+.iml
+.idea/**
+
+# static
+staticfiles/**

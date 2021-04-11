@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  shopping-mate-db:
+    env_file: .env
+    image: postgres:latest
+    ports:
+      - ${DATABASE_PORT}:5432
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - shopping-mate
+
+  shopping-mate-back:
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=${ENVIRONMENT}
+    command: gunicorn shopping_mate.wsgi:application --bind 0.0.0.0:${BACKEND_PORT}
+    env_file: .env
+    volumes:
+      - .:/code
+    ports:
+      - ${BACKEND_PORT}:8000
+    depends_on:
+      - shopping-mate-db
+    networks:
+      - shopping-mate
+
+networks:
+  shopping-mate:
