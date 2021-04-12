@@ -1,8 +1,10 @@
 #!/bin/bash
 
-python -m piptools compile "$REQUIREMENTS_DIR"/base.in
-python -m piptools compile "$REQUIREMENTS_DIR"/dev.in
-python -m piptools compile "$REQUIREMENTS_DIR"/prod.in
-python -m piptools compile "$REQUIREMENTS_DIR"/test.in
+SCRIPT_PATH=$(dirname "$(realpath -s "$0")")
+REQUIREMENTS_RELATIVE_PATH="$SCRIPT_PATH""/../requirements"
 
-pip install -r "${REQUIREMENTS_DIR}"/"${ENVIRONMENT}".txt
+python -m piptools compile "$REQUIREMENTS_RELATIVE_PATH"/base.in
+python -m piptools compile "$REQUIREMENTS_RELATIVE_PATH"/test.in
+
+python -m piptools compile "$REQUIREMENTS_RELATIVE_PATH"/dev.in
+python -m piptools compile "$REQUIREMENTS_RELATIVE_PATH"/prod.in
