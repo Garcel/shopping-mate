@@ -1,22 +1,9 @@
-FROM python:3
+FROM python:3.10
 ENV PYTHONUNBUFFERED=1
 
-ARG ENVIRONMENT
+WORKDIR /code
 
-# dir variables
-ENV CODE_DIR="/code"
-ENV REQUIREMENTS_DIR="${CODE_DIR}/requirements"
-ENV SCRIPTS_DIR="${CODE_DIR}/scripts"
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
 
-# sh file names variables
-ENV REQUIREMENTS_SH_FILE_NAME="setup_requirements.sh"
-
-RUN pip install pip-tools
-
-WORKDIR ${CODE_DIR}
-COPY . ${CODE_DIR}
-
-WORKDIR ${SCRIPTS_DIR}
-RUN ./${REQUIREMENTS_SH_FILE_NAME}
-
-WORKDIR ${CODE_DIR}
+COPY . /code/
