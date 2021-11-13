@@ -35,8 +35,7 @@ jobs:
             docker exec -it shopping-mate-back pytest
             docker exec -it shopping-mate-back coverage html
 
-      - store_artifacts:
-          path: htmlcov
+
 
 workflows:
   build_and_test:
@@ -44,3 +43,5 @@ workflows:
       - build:
           post-steps:
             - codecov/upload
+            - store_artifacts:
+                path: htmlcov
