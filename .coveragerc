@@ -1,0 +1,10 @@
+[run]
+omit =
+    manage.py
+    */__init__.py
+    shopping_mate/asgi.py
+    shopping_mate/settings.py
+    shopping_mate/test_settings.py
+    shopping_mate/urls.py
+    shopping_mate/wsgi.py
+    tests/*
