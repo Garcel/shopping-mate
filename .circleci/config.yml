@@ -36,8 +36,6 @@ jobs:
             docker exec -it shopping-mate-back pytest
             docker exec -it shopping-mate-back coverage html
 
-
-
 workflows:
   build_and_test:
     jobs:
