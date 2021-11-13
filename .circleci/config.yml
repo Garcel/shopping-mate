@@ -29,13 +29,6 @@ jobs:
           name: migrate
           command: |
             docker exec -it shopping-mate-back python manage.py
-  test:
-    machine:
-      image: circleci/classic:latest
-
-    working_directory: ~/repo
-
-    steps:
       - run:
           name: run tests with coverage
           command: |
@@ -48,9 +41,6 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build:
           post-steps:
             - codecov/upload
