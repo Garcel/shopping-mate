@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.2
 
 jobs:
   build:
@@ -42,12 +44,6 @@ jobs:
       - store_artifacts:
           path: htmlcov
 
-      - run:
-          name: upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            fail_ci_if_error: true
-
 workflows:
   build_and_test:
     jobs:
@@ -55,3 +51,5 @@ workflows:
       - test:
           requires:
             - build
+          post-steps:
+            - codecov/upload
