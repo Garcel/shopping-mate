@@ -28,7 +28,7 @@ jobs:
       - run:
           name: migrate
           command: |
-            docker exec -it shopping-mate-back python manage.py
+            docker exec -it shopping-mate-back python manage.py migrate
       - run:
           name: run tests with coverage
           command: |
