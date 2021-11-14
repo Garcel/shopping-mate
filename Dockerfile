@@ -1,4 +1,5 @@
 FROM python:3.10.0-alpine3.14
+ARG UID=1000
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /code
@@ -11,7 +12,7 @@ RUN \
  apk --purge del .build-deps
 
 # Add a new user non root user
-RUN adduser docker_user --disabled-password
+RUN adduser docker_user -u ${UID} --disabled-password
 
 # Change to non-root privilege
 USER docker_user
