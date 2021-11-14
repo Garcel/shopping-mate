@@ -8,8 +8,6 @@ jobs:
     machine:
       image: circleci/classic:latest
 
-    working_directory: ~/repo
-
     steps:
       - run:
           name: Set up test network
