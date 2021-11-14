@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       - image: cimg/base:2021.10
-      - image: cimg/postgres:latest
+      - image: cimg/postgres:14.0
         environment:
           PGHOST: localhost
           PGUSER: circleci
