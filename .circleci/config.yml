@@ -9,12 +9,12 @@ jobs:
     docker:
       - image: cimg/base:2021.04
       - image: postgres:latest
-    environment:
-      PGHOST: localhost
-      PGUSER: circleci
-      POSTGRES_USER: circleci
-      POSTGRES_DB: circle_test
-      POSTGRES_HOST_AUTH_METHOD: trust
+        environment:
+          PGHOST: localhost
+          PGUSER: circleci
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+          POSTGRES_HOST_AUTH_METHOD: trust
 
     working_directory: ~/repo
 
