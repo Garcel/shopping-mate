@@ -32,7 +32,7 @@ jobs:
       - run:
           name: build containers
           command: |
-            docker-compose up --build -d
+            docker run -itd -v /var/run/docker.sock:/var/run/docker.sock -v /root/test/:/var/tmp/ docker/compose:1.24.1  -f /var/tmp/docker-compose.yaml up --build -d
       - run:
           name: run tests with coverage
           command: |
