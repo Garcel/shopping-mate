@@ -17,5 +17,3 @@ RUN adduser docker_user --disabled-password
 USER docker_user
 
 COPY . /code/
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
