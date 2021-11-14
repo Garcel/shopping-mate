@@ -23,9 +23,6 @@ jobs:
           environment:
             DOCKERIZE_VERSION: v0.6.1
       - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
           name: create .env file
           command: |
             touch .env
@@ -36,6 +33,9 @@ jobs:
           name: build containers
           command: |
             docker-compose up --build -d
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: run tests with coverage
           command: |
