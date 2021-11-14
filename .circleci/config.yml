@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Set up test database.
           command: |
-            docker pull postgres:latest
+            docker pull postgres:9.6.24-alpine3.14
             docker run --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
       - run:
           name: Install dockerize.
@@ -31,7 +31,10 @@ jobs:
           name: Build containers
           command: |
             docker build . -t shopping-mate-back
-            docker run --name shopping-mate-back -e SECRET_KEY=$SECRET_KEY DATABASE_URL=$DATABASE_URL -d shopping-mate-back
+            docker run --name shopping-mate-back \
+            -e SECRET_KEY=$SECRET_KEY \
+            -e DATABASE_URL=$DATABASE_URL \
+            -d shopping-mate-back
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
