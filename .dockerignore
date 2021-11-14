@@ -1,0 +1,10 @@
+.circleci
+.coverage
+.env
+.git
+.gitignore
+
+README.md
+
+docker-compose.yml
+Dockerfile

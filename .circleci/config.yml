@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.2.2
+
 jobs:
   build:
     machine:
@@ -8,50 +11,39 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - run:
+          name: Set up test network
+          command: |
+            docker network create $DOCKER_NETWORK
+      - run:
+          name: Set up test database
+          command: |
+            docker pull postgres:9.6.24-alpine3.14
+            docker run --network $DOCKER_NETWORK --name database \
+            -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+            -p $DATABASE_PORT:5432 \
+            -d postgres
       - checkout
-
       - run:
-          name: create .env file
+          name: Build container
           command: |
-            touch .env
-            echo DEBUG=$DEBUG >> .env
-            echo SECRET_KEY=$SECRET_KEY >> .env
-            echo PORT=$PORT >> .env
-            echo POSTGRES_DB=$POSTGRES_DB >> .env
+            docker build --build-arg UID=$(id -u) -t shopping-mate-back .
+            docker run --network $DOCKER_NETWORK --name shopping-mate-back \
+            -e SECRET_KEY=$SECRET_KEY \
+            -e DATABASE_URL=$DATABASE_URL \
+            -v $(pwd):/code \
+            -d shopping-mate-back python manage.py runserver 0.0.0.0:8000
       - run:
-          name: build containers
-          command: |
-            docker-compose up --build -d
-      - run:
-          name: migrate
-          command: |
-            docker-compose run web python manage.py migrate
-  test:
-    machine:
-      image: circleci/classic:latest
-
-    working_directory: ~/repo
-
-    steps:
-      - run:
-          name: run tests with coverage
+          name: Run tests with coverage
           command: |
             docker exec -it shopping-mate-back pytest
             docker exec -it shopping-mate-back coverage html
 
-      - store_artifacts:
-          path: htmlcov
-
-      - run:
-          name: upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            fail_ci_if_error: true
-
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build:
+          post-steps:
+            - codecov/upload
+            - store_artifacts:
+                path: htmlcov
