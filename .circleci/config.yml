@@ -31,7 +31,7 @@ jobs:
             docker run --network $DOCKER_NETWORK --name shopping-mate-back \
             -e SECRET_KEY=$SECRET_KEY \
             -e DATABASE_URL=$DATABASE_URL \
-            -v $(pwd):/repo \
+            -v $(pwd):/code \
             -d shopping-mate-back python manage.py runserver 0.0.0.0:8000
       - run:
           name: Run tests with coverage
