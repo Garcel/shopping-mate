@@ -1,6 +1,17 @@
-version: "3.2"
+version: "3.8"
 
 services:
+  database:
+    env_file: .env
+    container_name: database
+    image: postgres:latest
+    ports:
+      - ${DATABASE_PORT}:5432
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - garcel-net
+
   shopping-mate-back:
     build:
       context: .
@@ -14,3 +25,9 @@ services:
       - .:/code
     ports:
       - "8001:8000"
+    networks:
+      - garcel-net
+
+networks:
+  garcel-net:
+    external: true
