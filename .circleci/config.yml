@@ -12,12 +12,16 @@ jobs:
 
     steps:
       - run:
-          name: Set up test database.
+          name: Set up test network
+          command: |
+            docker network create $DOCKER_NETWORK
+      - run:
+          name: Set up test database
           command: |
             docker pull postgres:9.6.24-alpine3.14
             docker run --network $DOCKER_NETWORK --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
       - run:
-          name: Install dockerize.
+          name: Install dockerize
           command: >-
             sudo apt-get update &&
             sudo apt-get install -y wget &&
