@@ -1,57 +1,53 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.2.2
+
 jobs:
   build:
-    machine:
-      image: circleci/classic:latest
+    docker:
+      - image: postgres:latest
+    environment:
+      PGHOST: localhost
+      PGUSER: circleci
+      POSTGRES_USER: circleci
+      POSTGRES_DB: circle_test
+      POSTGRES_HOST_AUTH_METHOD: trust
 
     working_directory: ~/repo
 
     steps:
       - checkout
-
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: create .env file
           command: |
             touch .env
             echo DEBUG=$DEBUG >> .env
             echo SECRET_KEY=$SECRET_KEY >> .env
-            echo PORT=$PORT >> .env
-            echo POSTGRES_DB=$POSTGRES_DB >> .env
+            echo DATABASE_URL=$DATABASE_URL >> .env
       - run:
           name: build containers
           command: |
             docker-compose up --build -d
-      - run:
-          name: migrate
-          command: |
-            docker-compose run web python manage.py migrate
-  test:
-    machine:
-      image: circleci/classic:latest
-
-    working_directory: ~/repo
-
-    steps:
       - run:
           name: run tests with coverage
           command: |
             docker exec -it shopping-mate-back pytest
             docker exec -it shopping-mate-back coverage html
 
-      - store_artifacts:
-          path: htmlcov
-
-      - run:
-          name: upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            fail_ci_if_error: true
-
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build:
+          post-steps:
+            - codecov/upload
+            - store_artifacts:
+                path: htmlcov
