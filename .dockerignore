@@ -1,5 +1,7 @@
+.circleci
 .coverage
 .env
+.git
 .gitignore
 
 README.md
