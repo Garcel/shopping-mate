@@ -25,13 +25,13 @@ jobs:
             -d postgres
       - checkout
       - run:
-          name: Build containers
+          name: Build container
           command: |
             docker build . -t shopping-mate-back
             docker run --network $DOCKER_NETWORK --name shopping-mate-back \
             -e SECRET_KEY=$SECRET_KEY \
             -e DATABASE_URL=$DATABASE_URL \
-            -v $(pwd)/repo:/code \
+            -v $(pwd):/code \
             -d shopping-mate-back python manage.py runserver 0.0.0.0:8000
       - run:
           name: Run tests with coverage
