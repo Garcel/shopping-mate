@@ -11,8 +11,6 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Set up test database.
           command: |
