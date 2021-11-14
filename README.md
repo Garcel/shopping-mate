@@ -1,23 +1,20 @@
 # shopping-mate
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
+[![codecov](https://codecov.io/gh/Garcel/shopping-mate/branch/master/graph/badge.svg?token=2J24VWKURW)](https://codecov.io/gh/Garcel/shopping-mate)
+
 Shopping list assistant app backend
 
 ## Overview :male_detective:
 Shopping-mate is an application to help you to create, manage and share shopping lists.
 
-## Environment variables 📋
+## Prerequisites :rotating_light:
+This project requires a database whose connection url must be passed as an environment variable.
 
+## Environment variables 📋
 Some variables are expected to exist into the environment. In my development environment I'm using and `.env` file 
 with these properties:
 ```properties
-DEBUG=
-BACKEND_PORT=
-DATABASE_HOST=
-DATABASE_PORT=
-DJANGO_SETTINGS_MODULE=
-ENVIRONMENT=
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
+DATABASE_URL=<schema>://<user>:<pass>@<host>:<port>/<db_name>
 SECRET_KEY=
 ```
 
