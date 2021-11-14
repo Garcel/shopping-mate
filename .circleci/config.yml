@@ -11,7 +11,11 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - checkout
+      - run:
+          name: Set up test database.
+          command: |
+            docker pull postgres:latest
+            docker run --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
       - run:
           name: Install dockerize.
           command: >-
@@ -22,22 +26,17 @@ jobs:
             sudo rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
             DOCKERIZE_VERSION: v0.6.1
+      - checkout
       - run:
-          name: create .env file
+          name: Build containers
           command: |
-            touch .env
-            echo DEBUG=$DEBUG >> .env
-            echo SECRET_KEY=$SECRET_KEY >> .env
-            echo DATABASE_URL=$DATABASE_URL >> .env
-      - run:
-          name: build containers
-          command: |
-            docker-compose up --build -d
+            docker build . -t shopping-mate-back
+            docker run --name shopping-mate-back -e SECRET_KEY=$SECRET_KEY DATABASE_URL=$DATABASE_URL -d shopping-mate-back
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          name: run tests with coverage
+          name: Run tests with coverage
           command: |
             docker exec -it shopping-mate-back pytest
             docker exec -it shopping-mate-back coverage html
