@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/base:2021:10
+      - image: cimg/base:2021.10
       - image: cimg/postgres:latest
         environment:
           PGHOST: localhost
