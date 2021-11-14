@@ -11,11 +11,13 @@ jobs:
     working_directory: ~/repo
 
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Set up test database.
           command: |
             docker pull postgres:9.6.24-alpine3.14
-            docker run --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
+            docker run --network $DOCKER_NETWORK --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
       - run:
           name: Install dockerize.
           command: >-
@@ -31,7 +33,7 @@ jobs:
           name: Build containers
           command: |
             docker build . -t shopping-mate-back
-            docker run --name shopping-mate-back \
+            docker run --network $DOCKER_NETWORK --name shopping-mate-back \
             -e SECRET_KEY=$SECRET_KEY \
             -e DATABASE_URL=$DATABASE_URL \
             -d shopping-mate-back
