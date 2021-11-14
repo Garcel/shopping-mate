@@ -19,7 +19,10 @@ jobs:
           name: Set up test database
           command: |
             docker pull postgres:9.6.24-alpine3.14
-            docker run --network $DOCKER_NETWORK --name database -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d postgres
+            docker run --network $DOCKER_NETWORK --name database \
+            -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+            -p $DATABASE_PORT:5432 \
+            -d postgres
       - run:
           name: Install dockerize
           command: >-
