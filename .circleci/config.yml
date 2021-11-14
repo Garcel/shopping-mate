@@ -37,6 +37,7 @@ jobs:
           name: Run tests with coverage
           command: |
             docker exec -it shopping-mate-back pytest
+            docker exec -it shopping-mate-back coverage xml
             docker exec -it shopping-mate-back coverage html
 
 workflows:
