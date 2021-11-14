@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Build container
           command: |
-            docker build . -t shopping-mate-back
+            docker build --build-arg UID=$(id -u) -t shopping-mate-back .
             docker run --network $DOCKER_NETWORK --name shopping-mate-back \
             -e SECRET_KEY=$SECRET_KEY \
             -e DATABASE_URL=$DATABASE_URL \
