@@ -11,7 +11,7 @@ RUN \
  apk --purge del .build-deps
 
 # Add a new user non root user
-RUN adduser docker_user
+RUN adduser docker_user --disabled-password
 
 # Change to non-root privilege
 USER docker_user
