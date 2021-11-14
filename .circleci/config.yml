@@ -7,8 +7,8 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/classic:latest
-      - image: circleci/postgres:latest
+      - image: cimg/base:latest
+      - image: cimg/postgres:latest
         environment:
           PGHOST: localhost
           PGUSER: circleci
