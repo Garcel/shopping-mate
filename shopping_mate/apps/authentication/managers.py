@@ -24,7 +24,7 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_args)
 
     def create_superuser(self, email, password, **kwargs):
-        extra_args = kwargs | {'is_superuser': True}
+        extra_args = kwargs | {'is_superuser': True, 'is_staff': True}
 
         return self._create_user(email, password, **extra_args)
 
