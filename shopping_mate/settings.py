@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shopping_mate.apps.authentication.apps.AuthenticationConfig',
+    'shopping_mate.apps.core.apps.CoreConfig',
     'tests',
 ]
 

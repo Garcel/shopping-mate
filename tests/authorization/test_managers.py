@@ -41,3 +41,4 @@ class TestSuperuserCreation:
         user = User.objects.create_superuser(**d.superuser)
 
         assert_user_created(user, d.superuser)
+        assert user.is_staff
