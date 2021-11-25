@@ -1,13 +1,15 @@
+user_password = 'nopass'
+
 vanilla_user = {
     'email': 'cat@gmail.com',
-    'password': '0000',
+    'password': user_password,
     'first_name': 'Cat',
     'last_name': 'Random'
 }
 
 vanilla_user_none_email = {
     'email': None,
-    'password': '0000',
+    'password': user_password,
     'first_name': 'Cat',
     'last_name': 'Random'
 }
