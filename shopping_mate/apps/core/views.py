@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from .models import ShoppingList
-from .serializers import ShoppingListSerializer
+from .models import ShoppingList, ShoppingItem
+from .serializers import ShoppingListSerializer, ShoppingItemSerializer
 
 
 class ShoppingListViewSet(viewsets.ModelViewSet):
@@ -15,6 +15,24 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         owner = request.user
         request.data._mutable = True
+        request.data['owner'] = owner.pk
+        request.data._mutable = False
+
+        return super().create(request, *args, **kwargs)
+
+
+class ShoppingItemViewSet(viewsets.ModelViewSet):
+    queryset = ShoppingItem.objects.all()
+    serializer_class = ShoppingItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ShoppingItem.objects.filter(list__owner=user)
+
+    def create(self, request, *args, **kwargs):
+        owner = request.user
+        request.data._mutable = True
+        request.data['list'] = kwargs['list_pk']
         request.data['owner'] = owner.pk
         request.data._mutable = False
 
