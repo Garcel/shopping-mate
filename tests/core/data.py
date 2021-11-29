@@ -1,6 +1,6 @@
-from datetime import datetime
+import datetime
 
-from shopping_mate.apps.core.constants import DATETIME_FORMAT
+from django.utils import timezone
 
 shopping_list = {
     "name": "shopping list test",
@@ -16,7 +16,7 @@ shopping_list_with_owner = {
 shopping_item = {
     "name": "shopping list test",
     "description": "My description test",
-    "due_date": datetime.strptime("29/01/22 15:00:00", DATETIME_FORMAT)
+    "due_date": timezone.now() + datetime.timedelta(1)
 }
 
 shopping_item_with_list = {

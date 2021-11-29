@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 
 class ShoppingList(models.Model):
     class Meta:
-        db_table = "shopping_list"
+        db_table = 'shopping_list'
+        ordering = ['-id']
 
     name = models.CharField(_('name'), max_length=30)
     description = models.CharField(_('description'), max_length=150, blank=True, null=True)
@@ -17,7 +18,8 @@ class ShoppingList(models.Model):
 
 class ShoppingItem(models.Model):
     class Meta:
-        db_table = "shopping_item"
+        db_table = 'shopping_item'
+        ordering = ['-id']
 
     list = models.ForeignKey('ShoppingList', on_delete=models.CASCADE, related_name='items')
     name = models.CharField(_('name'), max_length=30)
