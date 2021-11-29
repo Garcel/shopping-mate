@@ -19,7 +19,8 @@ class TestShoppingListCreateView:
         authenticate_user(api_client, user_token[1])
         response = api_client.post(
             url,
-            d.shopping_list
+            d.shopping_list,
+            format='json'
         )
 
         assert response.status_code == status.HTTP_201_CREATED
@@ -42,14 +43,14 @@ class TestShoppingListListView:
         response = api_client.get(url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
+        assert len(response.data['results']) == 1
 
-        response_list_data = response.data[0]
-        assert response_list_data['name'] == owned_list.name
-        assert response_list_data['description'] == owned_list.description
-        assert response_list_data['owner'] == owned_list.owner.pk
-        assert response_list_data['creation_date'] == owned_list.creation_date.strftime(DATETIME_FORMAT)
-        assert response_list_data['last_update'] == owned_list.last_update.strftime(DATETIME_FORMAT)
+        response_data = response.data['results'][0]
+        assert response_data['name'] == owned_list.name
+        assert response_data['description'] == owned_list.description
+        assert response_data['owner'] == owned_list.owner.pk
+        assert response_data['creation_date'] == owned_list.creation_date.strftime(DATETIME_FORMAT)
+        assert response_data['last_update'] == owned_list.last_update.strftime(DATETIME_FORMAT)
 
 
 @pytest.mark.django_db
@@ -178,7 +179,8 @@ class TestShoppingItemCreateView:
         authenticate_user(api_client, user_token[1])
         response = api_client.post(
             url,
-            d.shopping_item
+            d.shopping_item,
+            format='json'
         )
 
         assert response.status_code == status.HTTP_201_CREATED
@@ -201,9 +203,9 @@ class TestShoppingItemListView:
         response = api_client.get(url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
+        assert len(response.data['results']) == 1
 
-        response_data = response.data[0]
+        response_data = response.data['results'][0]
         assert response_data['name'] == item.name
         assert response_data['description'] == item.description
         assert response_data['data'] == item.data
@@ -220,7 +222,7 @@ class TestShoppingItemRetrieveView:
         shopping_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         item = f.ShoppingItemFactory(**d.shopping_item, list=shopping_list)
 
-        url = reverse(self.API_URL, args=[shopping_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.get(url)
@@ -240,7 +242,7 @@ class TestShoppingItemRetrieveView:
         non_owned_list = f.ShoppingListFactory()
         item = f.ShoppingItemFactory(list=non_owned_list)
 
-        url = reverse(self.API_URL, args=[non_owned_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.get(url)
@@ -256,7 +258,7 @@ class TestShoppingItemDeleteView:
         shopping_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         item = f.ShoppingItemFactory(**d.shopping_item, list=shopping_list)
 
-        url = reverse(self.API_URL, args=[shopping_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.delete(url)
@@ -267,7 +269,7 @@ class TestShoppingItemDeleteView:
         non_owned_list = f.ShoppingListFactory()
         item = f.ShoppingItemFactory(**d.shopping_item, list=non_owned_list)
 
-        url = reverse(self.API_URL, args=[non_owned_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.delete(url)
@@ -283,7 +285,7 @@ class TestShoppingItemUpdateView:
         shopping_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         item = f.ShoppingItemFactory(**d.shopping_item, list=shopping_list)
 
-        url = reverse(self.API_URL, args=[shopping_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.put(
@@ -297,7 +299,7 @@ class TestShoppingItemUpdateView:
         shopping_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         item = f.ShoppingItemFactory(**d.shopping_item, list=shopping_list)
 
-        url = reverse(self.API_URL, args=[shopping_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.put(
@@ -311,7 +313,7 @@ class TestShoppingItemUpdateView:
         non_owned_list = f.ShoppingListFactory()
         item = f.ShoppingItemFactory(**d.shopping_item, list=non_owned_list)
 
-        url = reverse(self.API_URL, args=[non_owned_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.patch(
@@ -325,7 +327,7 @@ class TestShoppingItemUpdateView:
         non_owned_list = f.ShoppingListFactory()
         item = f.ShoppingItemFactory(**d.shopping_item, list=non_owned_list)
 
-        url = reverse(self.API_URL, args=[non_owned_list.pk, item.pk])
+        url = reverse(self.API_URL, args=[item.pk])
 
         authenticate_user(api_client, user_token[1])
         response = api_client.patch(

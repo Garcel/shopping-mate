@@ -14,9 +14,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         owner = request.user
-        request.data._mutable = True
         request.data['owner'] = owner.pk
-        request.data._mutable = False
 
         return super().create(request, *args, **kwargs)
 
@@ -31,9 +29,7 @@ class ShoppingItemViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         owner = request.user
-        request.data._mutable = True
         request.data['list'] = kwargs['list_pk']
         request.data['owner'] = owner.pk
-        request.data._mutable = False
 
         return super().create(request, *args, **kwargs)

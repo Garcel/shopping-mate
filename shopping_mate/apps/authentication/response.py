@@ -9,9 +9,3 @@ class HttpBasic401(HttpResponse):
         super().__init__('401 Unauthorized', status=status.HTTP_401_UNAUTHORIZED)
 
         self[WWW_AUTH_HEADER] = 'Basic'
-
-class HttpToken401(HttpResponse):
-    def __init__(self):
-        super().__init__('401 Unauthorized', status=status.HTTP_401_UNAUTHORIZED)
-
-        self[WWW_AUTH_HEADER] = 'Token'

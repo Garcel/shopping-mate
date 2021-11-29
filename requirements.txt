@@ -7,7 +7,9 @@
 asgiref==3.4.1
     # via django
 attrs==21.2.0
-    # via pytest
+    # via
+    #   jsonschema
+    #   pytest
 coverage[toml]==6.1.2
     # via pytest-cov
 dj-database-url==0.5.0
@@ -16,7 +18,12 @@ django==3.2.9
     # via
     #   -r requirements.in
     #   djangorestframework
+    #   drf-spectacular
 djangorestframework==3.12.4
+    # via
+    #   -r requirements.in
+    #   drf-spectacular
+drf-spectacular==0.21.0
     # via -r requirements.in
 factory-boy==3.2.1
     # via -r requirements.in
@@ -26,8 +33,14 @@ freezegun==1.1.0
     # via pytest-freezegun
 gunicorn==20.1.0
     # via -r requirements.in
+importlib-resources==5.4.0
+    # via jsonschema
+inflection==0.5.1
+    # via drf-spectacular
 iniconfig==1.1.1
     # via pytest
+jsonschema==4.2.1
+    # via drf-spectacular
 packaging==21.2
     # via pytest
 pluggy==1.0.0
@@ -38,6 +51,8 @@ py==1.11.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
+pyrsistent==0.18.0
+    # via jsonschema
 pytest==6.2.5
     # via
     #   pytest-cov
@@ -58,6 +73,8 @@ python-dateutil==2.8.2
     #   freezegun
 pytz==2021.3
     # via django
+pyyaml==6.0
+    # via drf-spectacular
 six==1.16.0
     # via python-dateutil
 sqlparse==0.4.2
@@ -68,8 +85,12 @@ toml==0.10.2
     # via pytest
 tomli==1.2.2
     # via coverage
+uritemplate==4.1.1
+    # via drf-spectacular
 whitenoise==5.3.0
     # via -r requirements.in
+zipp==3.6.0
+    # via importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

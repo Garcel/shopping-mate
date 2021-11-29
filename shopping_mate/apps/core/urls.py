@@ -12,7 +12,7 @@ urlpatterns = [
         'get': 'list',
         'post': 'create'
     }), name='item-list'),
-    path('lists/<int:list_pk>/items/<int:pk>', views.ShoppingItemViewSet.as_view({
+    path('lists/items/<int:pk>', views.ShoppingItemViewSet.as_view({
         'get': 'retrieve',
         'delete': 'destroy',
         'put': 'update',
