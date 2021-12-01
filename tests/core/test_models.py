@@ -1,7 +1,6 @@
 import datetime
 
 import pytest
-import pytz
 from django.utils import timezone
 
 from shopping_mate.apps.core.models import ShoppingItem

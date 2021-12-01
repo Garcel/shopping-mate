@@ -4,7 +4,7 @@ services:
   shopping-mate-back:
     build:
       context: .
-    command: gunicorn shopping_mate.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn --bind 0.0.0.0:8000 --reload shopping_mate.wsgi:application
     container_name: shopping-mate-back
     environment:
       - DATABASE_URL=${DATABASE_URL}

@@ -1,23 +1,19 @@
-vanilla_user = {
-    'email': 'cat@gmail.com',
-    'password': '0000',
-    'first_name': 'Cat',
-    'last_name': 'Random'
+import datetime
+
+from django.utils import timezone
+
+shopping_list = {
+    "name": "shopping list test",
+    "description": "My description test"
 }
 
-vanilla_user_none_email = {
-    'email': None,
-    'password': '0000',
-    'first_name': 'Cat',
-    'last_name': 'Random'
+shopping_item_without_due_date = {
+    "name": "shopping list test",
+    "description": "My description test",
+    "due_date": timezone.now() + datetime.timedelta(1)
 }
 
-staff_user = {
-    **vanilla_user,
-    'is_staff': True
-}
-
-superuser = {
-    **vanilla_user,
-    'is_superuser': True
+shopping_item = {
+    **shopping_item_without_due_date,
+    "due_date": timezone.now() + datetime.timedelta(1)
 }
