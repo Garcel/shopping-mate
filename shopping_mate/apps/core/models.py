@@ -13,7 +13,7 @@ class ShoppingList(models.Model):
     description = models.CharField(_('description'), max_length=150, blank=True, null=True)
     creation_date = models.DateTimeField(_('date created'), auto_now_add=True)
     last_update = models.DateTimeField(_('date last modification'), auto_now_add=True)
-    owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class ShoppingItem(models.Model):
