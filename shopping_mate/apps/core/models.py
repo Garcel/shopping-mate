@@ -12,7 +12,7 @@ class ShoppingList(models.Model):
     name = models.CharField(_('name'), max_length=30)
     description = models.CharField(_('description'), max_length=150, blank=True, null=True)
     creation_date = models.DateTimeField(_('date created'), auto_now_add=True)
-    last_update = models.DateTimeField(_('date last modification'), auto_now_add=True)
+    last_update_date = models.DateTimeField(_('date last modification'), auto_now_add=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
@@ -26,7 +26,7 @@ class ShoppingItem(models.Model):
     data = models.JSONField(null=True, blank=True)
     description = models.CharField(_('description'), max_length=150, blank=True, null=True)
     creation_date = models.DateTimeField(_('date created'), default=timezone.now)
-    last_update = models.DateTimeField(_('date last modification'), default=timezone.now)
+    last_update_date = models.DateTimeField(_('date last modification'), default=timezone.now)
     due_date = models.DateTimeField(_('date of expiration'), null=True, blank=True)
 
     def get_seconds_to_expiration(self):

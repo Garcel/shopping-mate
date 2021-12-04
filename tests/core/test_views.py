@@ -302,7 +302,7 @@ def assert_list_response(shopping_list: ShoppingList, response_data: dict):
     assert response_data['description'] == shopping_list.description
     assert response_data['owner'] == shopping_list.owner.pk
     assert response_data['creation_date'] == shopping_list.creation_date.strftime(DATETIME_FORMAT)
-    assert response_data['last_update'] == shopping_list.last_update.strftime(DATETIME_FORMAT)
+    assert response_data['last_update_date'] == shopping_list.last_update_date.strftime(DATETIME_FORMAT)
 
 def assert_item_list_response(item: ShoppingItem, response_data: dict):
     assert response_data['name'] == item.name
@@ -310,5 +310,5 @@ def assert_item_list_response(item: ShoppingItem, response_data: dict):
     assert response_data['data'] == item.data
     assert response_data['list'] == item.list.pk
     assert response_data['creation_date'] == item.creation_date.strftime(DATETIME_FORMAT)
-    assert response_data['last_update'] == item.last_update.strftime(DATETIME_FORMAT)
+    assert response_data['last_update_date'] == item.last_update_date.strftime(DATETIME_FORMAT)
     assert response_data['due_date'] == item.due_date.strftime(DATETIME_FORMAT)
