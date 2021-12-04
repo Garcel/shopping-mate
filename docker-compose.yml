@@ -10,6 +10,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
     env_file: .env
     volumes:
       - .:/code
