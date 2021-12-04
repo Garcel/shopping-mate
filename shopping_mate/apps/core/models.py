@@ -15,6 +15,9 @@ class ShoppingList(models.Model):
     last_update_date = models.DateTimeField(_('date last modification'), auto_now_add=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+    @property
+    def count(self):
+        return ShoppingItem.objects.filter(list=self).count()
 
 class ShoppingItem(models.Model):
     class Meta:
