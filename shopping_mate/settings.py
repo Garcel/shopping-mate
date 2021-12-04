@@ -150,4 +150,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-CORS_ALLOWED_ORIGINS = json.loads(os.getenv('CORS_ALLOWED_ORIGINS'))
+CORS_ALLOWED_ORIGINS = json.loads(os.getenv('CORS_ALLOWED_ORIGINS')) if os.getenv('CORS_ALLOWED_ORIGINS') else []
