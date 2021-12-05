@@ -315,3 +315,4 @@ def assert_item_list_response(item: ShoppingItem, response_data: dict):
     assert response_data['creation_date'] == item.creation_date.strftime(DATETIME_FORMAT)
     assert response_data['last_update_date'] == item.last_update_date.strftime(DATETIME_FORMAT)
     assert response_data['due_date'] == item.due_date.strftime(DATETIME_FORMAT)
+    assert response_data['completed'] == item.completed
