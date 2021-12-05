@@ -38,6 +38,7 @@ class TestShoppingListListView:
     def test_user_only_can_list_owned_lists(self, api_client, user_token):
         owned_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         f.ShoppingItem(list=owned_list)
+        f.ShoppingItem(list=owned_list, completed=True)
         f.ShoppingListFactory()
 
         url = reverse(self.API_URL)
@@ -59,6 +60,7 @@ class TestShoppingListRetrieveView:
     def test_user_can_retrieve_an_owned_list(self, api_client, user_token):
         owned_list: ShoppingList = f.ShoppingListFactory(owner=user_token[0])
         f.ShoppingItem(list=owned_list)
+        f.ShoppingItem(list=owned_list, completed=True)
 
         url = reverse(self.API_URL, args=[owned_list.pk])
 
@@ -305,6 +307,7 @@ def assert_list_response(shopping_list: ShoppingList, response_data: dict):
     assert response_data['owner'] == shopping_list.owner.pk
     assert response_data['creation_date'] == shopping_list.creation_date.strftime(DATETIME_FORMAT)
     assert response_data['last_update_date'] == shopping_list.last_update_date.strftime(DATETIME_FORMAT)
+    assert response_data['completed_count'] == ShoppingItem.objects.filter(list=shopping_list, completed=False).count()
     assert response_data['count'] == ShoppingItem.objects.filter(list=shopping_list).count()
 
 def assert_item_list_response(item: ShoppingItem, response_data: dict):
