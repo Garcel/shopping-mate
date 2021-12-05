@@ -19,6 +19,10 @@ class ShoppingList(models.Model):
     def count(self):
         return ShoppingItem.objects.filter(list=self).count()
 
+    @property
+    def completed_count(self):
+        return ShoppingItem.objects.filter(list=self, completed=True).count()
+
 class ShoppingItem(models.Model):
     class Meta:
         db_table = 'shopping_item'

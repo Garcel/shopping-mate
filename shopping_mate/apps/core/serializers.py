@@ -7,8 +7,9 @@ from .models import ShoppingList, ShoppingItem
 class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
-        fields = ['pk', 'name', 'description', 'owner', 'creation_date', 'last_update_date', 'count']
+        fields = ['pk', 'name', 'description', 'owner', 'creation_date', 'last_update_date', 'count', 'completed_count']
 
+    completed_count = serializers.ReadOnlyField()
     count = serializers.ReadOnlyField()
     creation_date = serializers.DateTimeField(format=DATETIME_FORMAT, read_only=True)
     last_update_date = serializers.DateTimeField(format=DATETIME_FORMAT, read_only=True)
