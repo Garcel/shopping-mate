@@ -23,7 +23,9 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 class ShoppingItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingItem
-        fields = ['pk', 'name', 'description', 'data', 'list', 'creation_date', 'last_update_date', 'due_date']
+        fields = [
+            'pk', 'name', 'description', 'data', 'list', 'creation_date', 'last_update_date', 'due_date', 'completed'
+        ]
 
     creation_date = serializers.DateTimeField(format=DATETIME_FORMAT, read_only=True)
     due_date = serializers.DateTimeField(format=DATETIME_FORMAT, required=False)

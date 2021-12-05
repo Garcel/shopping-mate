@@ -31,6 +31,7 @@ class ShoppingItem(models.Model):
     creation_date = models.DateTimeField(_('date created'), default=timezone.now)
     last_update_date = models.DateTimeField(_('date last modification'), default=timezone.now)
     due_date = models.DateTimeField(_('date of expiration'), null=True, blank=True)
+    completed = models.BooleanField(_('whether this item has been completed or not'), default=False)
 
     def get_seconds_to_expiration(self):
         """
